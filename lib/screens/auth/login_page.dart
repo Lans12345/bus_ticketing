@@ -1,3 +1,5 @@
+import 'package:bus_ticketing/screens/auth/signup_page.dart';
+import 'package:bus_ticketing/screens/home_screen.dart';
 import 'package:bus_ticketing/utils/colors.dart';
 import 'package:bus_ticketing/widgets/button_widget.dart';
 import 'package:bus_ticketing/widgets/text_widget.dart';
@@ -85,7 +87,11 @@ class _LoginPageState extends State<LoginPage> {
                             width: 200,
                             height: 40,
                             child: ButtonWidget(
-                                onPressed: (() {}),
+                                onPressed: (() {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
+                                }),
                                 text: 'Login',
                                 color: primary),
                           ),
@@ -93,6 +99,26 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextRegular(
+                        text: "Doesn't have an Account?",
+                        fontSize: 12,
+                        color: Colors.black),
+                    TextButton(
+                      onPressed: (() {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SignupPage()));
+                      }),
+                      child: TextBold(
+                          text: "Signup", fontSize: 14, color: Colors.black),
+                    )
+                  ],
                 ),
               ],
             ),
