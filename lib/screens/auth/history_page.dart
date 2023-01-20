@@ -7,8 +7,6 @@ import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +14,7 @@ class HistoryScreen extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/back.jpg'))),
           ),
@@ -34,14 +32,14 @@ class HistoryScreen extends StatelessWidget {
                             children: [
                               IconButton(
                                 onPressed: (() {}),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.person,
                                   color: Colors.white,
                                 ),
                               ),
                               IconButton(
                                 onPressed: (() {}),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.notification_add,
                                   color: Colors.white,
                                 ),
@@ -96,7 +94,7 @@ class HistoryScreen extends StatelessWidget {
                                         ],
                                       ));
                             }),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.logout,
                               color: Colors.white,
                             ),
@@ -106,12 +104,12 @@ class HistoryScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextBold(
                     text: 'Ride History', fontSize: 32, color: Colors.white),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -130,7 +128,7 @@ class HistoryScreen extends StatelessWidget {
                             color: Colors.black),
                       );
                     }))),
-                Expanded(
+                const Expanded(
                   child: SizedBox(
                     height: 50,
                   ),
@@ -142,7 +140,7 @@ class HistoryScreen extends StatelessWidget {
                     }),
                     text: 'Add Ride',
                     color: Colors.black),
-                SizedBox(
+                const SizedBox(
                   height: 80,
                 ),
               ],

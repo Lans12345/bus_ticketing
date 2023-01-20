@@ -1,11 +1,8 @@
 import 'package:bus_ticketing/screens/auth/login_page.dart';
 import 'package:bus_ticketing/utils/colors.dart';
-import 'package:bus_ticketing/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
 class LandingScreen extends StatelessWidget {
-  const LandingScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -6,8 +6,6 @@ import '../widgets/button_widget.dart';
 import '../widgets/text_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/back.jpg'))),
           ),
@@ -35,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) => HistoryScreen()));
                             }),
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_back_ios_new,
                               color: Colors.white,
                             ),
@@ -72,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                   //     ),
                   //   ),
                   // ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -98,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                                 child: TextFormField(
                                   onChanged: ((value) {}),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             TextRegular(
@@ -108,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                                 child: TextFormField(
                                   onChanged: ((value) {}),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             TextRegular(
@@ -120,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                                 child: TextFormField(
                                   onChanged: ((value) {}),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             TextRegular(
@@ -132,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                                 child: TextFormField(
                                   onChanged: ((value) {}),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             TextRegular(
@@ -147,7 +145,7 @@ class HomeScreen extends StatelessWidget {
                           ]),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],
