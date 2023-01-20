@@ -1,3 +1,4 @@
+import 'package:bus_ticketing/screens/auth/history_page.dart';
 import 'package:bus_ticketing/screens/auth/signup_page.dart';
 import 'package:bus_ticketing/screens/home_screen.dart';
 import 'package:bus_ticketing/utils/colors.dart';
@@ -90,7 +91,8 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: (() {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                                          builder: (context) =>
+                                              HistoryScreen()));
                                 }),
                                 text: 'Login',
                                 color: primary),
