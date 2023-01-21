@@ -141,7 +141,7 @@ class HistoryScreen extends StatelessWidget {
                     text: 'Add Ride',
                     color: Colors.black),
                 const SizedBox(
-                  height: 80,
+                  height: 20,
                 ),
               ],
             ),
