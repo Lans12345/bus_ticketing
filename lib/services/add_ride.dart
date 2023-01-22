@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 Future addRide(
     String from,
@@ -14,6 +15,8 @@ Future addRide(
     String payment) async {
   final docUser = FirebaseFirestore.instance.collection('Rides').doc();
 
+  String tdata = DateFormat("hh:mm a").format(DateTime.now());
+
   final json = {
     'from': from,
     'to': to,
@@ -26,7 +29,9 @@ Future addRide(
     'distance': distance,
     'payment': payment,
     'id': docUser.id,
-    'uid': FirebaseAuth.instance.currentUser!.uid
+    'uid': FirebaseAuth.instance.currentUser!.uid,
+    'time': tdata,
+    'dateTime': DateTime.now(),
   };
 
   await docUser.set(json);
