@@ -1,5 +1,6 @@
 import 'package:bus_ticketing/screens/auth/login_page.dart';
 import 'package:bus_ticketing/screens/home_screen.dart';
+import 'package:bus_ticketing/screens/notif_page.dart';
 import 'package:bus_ticketing/screens/profile_page.dart';
 import 'package:bus_ticketing/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,10 @@ class HistoryScreen extends StatelessWidget {
                                 ),
                               ),
                               IconButton(
-                                onPressed: (() {}),
+                                onPressed: (() {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => NotifPage()));
+                                }),
                                 icon: const Icon(
                                   Icons.notification_add,
                                   color: Colors.white,
