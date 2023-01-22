@@ -130,11 +130,25 @@ class HistoryScreen extends StatelessWidget {
                         ),
                         color: buttonColor),
                     child: ListView.builder(itemBuilder: ((context, index) {
-                      return ListTile(
-                        title: TextRegular(
-                            text: index.toString(),
-                            fontSize: 14,
-                            color: Colors.black),
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Card(
+                          child: ListTile(
+                            leading: const Icon(Icons.bus_alert),
+                            title: TextBold(
+                                text: 'Destination',
+                                fontSize: 14,
+                                color: Colors.black),
+                            subtitle: TextRegular(
+                                text: 'Origin',
+                                fontSize: 12,
+                                color: Colors.grey),
+                            trailing: TextRegular(
+                                text: 'Bus Name',
+                                fontSize: 12,
+                                color: Colors.black),
+                          ),
+                        ),
                       );
                     }))),
                 const Expanded(
