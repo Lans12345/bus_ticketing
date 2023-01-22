@@ -1,10 +1,11 @@
 import 'package:bus_ticketing/screens/auth/login_page.dart';
-import 'package:bus_ticketing/screens/auth/signup_page.dart';
-import 'package:bus_ticketing/screens/home_screen.dart';
+import 'package:bus_ticketing/services/add_user..dart';
 import 'package:bus_ticketing/utils/colors.dart';
 import 'package:bus_ticketing/widgets/button_widget.dart';
 import 'package:bus_ticketing/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -16,6 +17,13 @@ class _SignupPageState extends State<SignupPage> {
 
   var obs1 = true;
 
+  late String name = '';
+  late String birthday = '';
+  late String address = '';
+  late String email = '';
+  late String password = '';
+  late String confirmPassword = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +31,7 @@ class _SignupPageState extends State<SignupPage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/back.jpg'))),
           ),
@@ -32,11 +40,11 @@ class _SignupPageState extends State<SignupPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   TextBold(text: 'Fill Up', fontSize: 15, color: Colors.black),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -58,9 +66,11 @@ class _SignupPageState extends State<SignupPage> {
                           SizedBox(
                               height: 30,
                               child: TextFormField(
-                                onChanged: ((value) {}),
+                                onChanged: ((value) {
+                                  name = value;
+                                }),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextRegular(
@@ -70,9 +80,11 @@ class _SignupPageState extends State<SignupPage> {
                           SizedBox(
                               height: 30,
                               child: TextFormField(
-                                onChanged: ((value) {}),
+                                onChanged: ((value) {
+                                  birthday = value;
+                                }),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextRegular(
@@ -82,9 +94,11 @@ class _SignupPageState extends State<SignupPage> {
                           SizedBox(
                               height: 30,
                               child: TextFormField(
-                                onChanged: ((value) {}),
+                                onChanged: ((value) {
+                                  address = value;
+                                }),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextRegular(
@@ -92,9 +106,11 @@ class _SignupPageState extends State<SignupPage> {
                           SizedBox(
                               height: 30,
                               child: TextFormField(
-                                onChanged: ((value) {}),
+                                onChanged: ((value) {
+                                  email = value;
+                                }),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextRegular(
@@ -112,12 +128,15 @@ class _SignupPageState extends State<SignupPage> {
                                           });
                                         }),
                                         icon: obs
-                                            ? Icon(Icons.visibility)
-                                            : Icon(Icons.visibility_off))),
+                                            ? const Icon(Icons.visibility)
+                                            : const Icon(
+                                                Icons.visibility_off))),
                                 obscureText: obs,
-                                onChanged: ((value) {}),
+                                onChanged: ((value) {
+                                  password = value;
+                                }),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextRegular(
@@ -135,12 +154,15 @@ class _SignupPageState extends State<SignupPage> {
                                           });
                                         }),
                                         icon: obs1
-                                            ? Icon(Icons.visibility)
-                                            : Icon(Icons.visibility_off))),
+                                            ? const Icon(Icons.visibility)
+                                            : const Icon(
+                                                Icons.visibility_off))),
                                 obscureText: obs1,
-                                onChanged: ((value) {}),
+                                onChanged: ((value) {
+                                  confirmPassword = value;
+                                }),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Center(
@@ -148,10 +170,94 @@ class _SignupPageState extends State<SignupPage> {
                               width: 200,
                               height: 40,
                               child: ButtonWidget(
-                                  onPressed: (() {
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) => LoginPage()));
+                                  onPressed: (() async {
+                                    if (password != confirmPassword) {
+                                      Fluttertoast.showToast(
+                                          msg: 'Password do not match!');
+                                    } else {
+                                      try {
+                                        await FirebaseAuth.instance
+                                            .createUserWithEmailAndPassword(
+                                                email: email,
+                                                password: password);
+
+                                        showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return Dialog(
+                                                child: SizedBox(
+                                                    height: 300,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Icon(
+                                                          Icons
+                                                              .check_circle_outline_outlined,
+                                                          size: 75,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        TextBold(
+                                                            text:
+                                                                'Registered Succesfully!',
+                                                            fontSize: 18,
+                                                            color:
+                                                                Colors.black),
+                                                        const SizedBox(
+                                                          height: 50,
+                                                        ),
+                                                        ButtonWidget(
+                                                          onPressed: () {
+                                                            addUser(
+                                                                name,
+                                                                birthday,
+                                                                address,
+                                                                email);
+
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushReplacement(
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                LoginPage()));
+                                                          },
+                                                          text: 'Continue',
+                                                          color: Colors.black,
+                                                        ),
+                                                      ],
+                                                    )),
+                                              );
+                                            });
+                                      } catch (e) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                                  content: TextRegular(
+                                                      text: "$e",
+                                                      color: Colors.black,
+                                                      fontSize: 12),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      onPressed: () =>
+                                                          Navigator.of(context)
+                                                              .pop(true),
+                                                      child: TextBold(
+                                                          text: 'Close',
+                                                          color: Colors.black,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ));
+                                      }
+                                    }
+                                    // Navigator.of(context).pushReplacement(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => LoginPage()));
                                   }),
                                   text: 'Signup',
                                   color: primary),
@@ -161,7 +267,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Row(

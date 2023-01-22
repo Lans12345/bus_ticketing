@@ -1,9 +1,9 @@
 import 'package:bus_ticketing/screens/auth/history_page.dart';
 import 'package:bus_ticketing/screens/auth/signup_page.dart';
-import 'package:bus_ticketing/screens/home_screen.dart';
 import 'package:bus_ticketing/utils/colors.dart';
 import 'package:bus_ticketing/widgets/button_widget.dart';
 import 'package:bus_ticketing/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late String email = '';
+  late String password = '';
   var obs = true;
 
   @override
@@ -21,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/back.jpg'))),
           ),
@@ -33,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                     text: 'Please login to continue',
                     fontSize: 15,
                     color: Colors.black),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -55,9 +57,11 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                             height: 30,
                             child: TextFormField(
-                              onChanged: ((value) {}),
+                              onChanged: ((value) {
+                                email = value;
+                              }),
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         TextRegular(
@@ -75,12 +79,14 @@ class _LoginPageState extends State<LoginPage> {
                                         });
                                       }),
                                       icon: obs
-                                          ? Icon(Icons.visibility)
-                                          : Icon(Icons.visibility_off))),
+                                          ? const Icon(Icons.visibility)
+                                          : const Icon(Icons.visibility_off))),
                               obscureText: obs,
-                              onChanged: ((value) {}),
+                              onChanged: ((value) {
+                                password = value;
+                              }),
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                         Center(
@@ -88,11 +94,37 @@ class _LoginPageState extends State<LoginPage> {
                             width: 200,
                             height: 40,
                             child: ButtonWidget(
-                                onPressed: (() {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              HistoryScreen()));
+                                onPressed: (() async {
+                                  try {
+                                    await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email, password: password);
+
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HistoryScreen()));
+                                  } catch (e) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              content: TextRegular(
+                                                  text: "$e",
+                                                  color: Colors.black,
+                                                  fontSize: 12),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(true),
+                                                  child: TextBold(
+                                                      text: 'Close',
+                                                      color: Colors.black,
+                                                      fontSize: 12),
+                                                ),
+                                              ],
+                                            ));
+                                  }
                                 }),
                                 text: 'Login',
                                 color: primary),
@@ -102,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
