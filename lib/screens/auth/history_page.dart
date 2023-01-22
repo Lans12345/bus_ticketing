@@ -1,5 +1,6 @@
 import 'package:bus_ticketing/screens/auth/login_page.dart';
 import 'package:bus_ticketing/screens/home_screen.dart';
+import 'package:bus_ticketing/screens/profile_page.dart';
 import 'package:bus_ticketing/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,11 @@ class HistoryScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               IconButton(
-                                onPressed: (() {}),
+                                onPressed: (() {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfilePage()));
+                                }),
                                 icon: const Icon(
                                   Icons.person,
                                   color: Colors.white,
