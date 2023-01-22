@@ -3,6 +3,7 @@ import 'package:bus_ticketing/screens/home_screen.dart';
 import 'package:bus_ticketing/screens/notif_page.dart';
 import 'package:bus_ticketing/screens/profile_page.dart';
 import 'package:bus_ticketing/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/button_widget.dart';
@@ -35,8 +36,7 @@ class HistoryScreen extends StatelessWidget {
                               IconButton(
                                 onPressed: (() {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProfilePage()));
+                                      builder: (context) => ProfilePage()));
                                 }),
                                 icon: const Icon(
                                   Icons.person,
@@ -86,7 +86,9 @@ class HistoryScreen extends StatelessWidget {
                                             ),
                                           ),
                                           MaterialButton(
-                                            onPressed: () {
+                                            onPressed: () async {
+                                              await FirebaseAuth.instance
+                                                  .signOut();
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                       MaterialPageRoute(
@@ -129,28 +131,34 @@ class HistoryScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                         color: buttonColor),
-                    child: ListView.builder(itemBuilder: ((context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Card(
-                          child: ListTile(
-                            leading: const Icon(Icons.bus_alert),
-                            title: TextBold(
-                                text: 'Destination',
-                                fontSize: 14,
-                                color: Colors.black),
-                            subtitle: TextRegular(
-                                text: 'Origin',
-                                fontSize: 12,
-                                color: Colors.grey),
-                            trailing: TextRegular(
-                                text: 'Bus Name',
-                                fontSize: 12,
-                                color: Colors.black),
-                          ),
-                        ),
-                      );
-                    }))),
+                    child: StreamBuilder<Object>(
+                        stream: null,
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                              itemBuilder: ((context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Card(
+                                child: ListTile(
+                                  leading: const Icon(Icons.bus_alert),
+                                  title: TextBold(
+                                      text: 'Destination',
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                  subtitle: TextRegular(
+                                      text: 'Origin',
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                  trailing: TextRegular(
+                                      text: 'Bus Name',
+                                      fontSize: 12,
+                                      color: Colors.black),
+                                ),
+                              ),
+                            );
+                          }));
+                        })),
                 const Expanded(
                   child: SizedBox(
                     height: 50,
