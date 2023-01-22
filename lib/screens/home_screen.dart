@@ -1,4 +1,5 @@
 import 'package:bus_ticketing/screens/auth/history_page.dart';
+import 'package:bus_ticketing/services/add_ride.dart';
 import 'package:bus_ticketing/utils/colors.dart';
 import 'package:bus_ticketing/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,15 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isChecked2 = false;
 
   late String nameOfBus = '';
+
+  late String from = '';
+  late String to = '';
+  late String totalPassenger = '';
+  late String name = '';
+  late String departTime = '';
+  late String arrivalTime = '';
+  late String availableSeats = '';
+  late String distance = '';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   Container(
-                    height: 360,
+                    height: 340,
                     width: 300,
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -105,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                                 height: 30,
                                 child: TextFormField(
-                                  onChanged: ((value) {}),
+                                  onChanged: ((value) {
+                                    from = value;
+                                  }),
                                 )),
                             const SizedBox(
                               height: 10,
@@ -115,19 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                                 height: 30,
                                 child: TextFormField(
-                                  onChanged: ((value) {}),
-                                )),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextRegular(
-                                text: 'Date:',
-                                fontSize: 12,
-                                color: Colors.black),
-                            SizedBox(
-                                height: 30,
-                                child: TextFormField(
-                                  onChanged: ((value) {}),
+                                  onChanged: ((value) {
+                                    to = value;
+                                  }),
                                 )),
                             const SizedBox(
                               height: 10,
@@ -139,7 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                                 height: 30,
                                 child: TextFormField(
-                                  onChanged: ((value) {}),
+                                  onChanged: ((value) {
+                                    totalPassenger = value;
+                                  }),
                                 )),
                             const SizedBox(
                               height: 10,
@@ -151,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                                 height: 30,
                                 child: TextFormField(
-                                  onChanged: ((value) {}),
+                                  onChanged: ((value) {
+                                    name = value;
+                                  }),
                                 )),
                             const SizedBox(
                               height: 10,
@@ -266,7 +272,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 30,
                                         width: 100,
                                         child: TextFormField(
-                                          onChanged: ((value) {}),
+                                          keyboardType: TextInputType.number,
+                                          onChanged: ((value) {
+                                            departTime = value;
+                                          }),
                                         )),
                                     const SizedBox(
                                       height: 10,
@@ -283,7 +292,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 30,
                                         width: 100,
                                         child: TextFormField(
-                                          onChanged: ((value) {}),
+                                          keyboardType: TextInputType.number,
+                                          onChanged: ((value) {
+                                            arrivalTime = value;
+                                          }),
                                         )),
                                     const SizedBox(
                                       height: 10,
@@ -308,7 +320,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 30,
                                         width: 100,
                                         child: TextFormField(
-                                          onChanged: ((value) {}),
+                                          keyboardType: TextInputType.number,
+                                          onChanged: ((value) {
+                                            availableSeats = value;
+                                          }),
                                         )),
                                     const SizedBox(
                                       height: 10,
@@ -318,14 +333,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextRegular(
-                                        text: 'Distance: ',
+                                        text: 'Distance: (km)',
                                         fontSize: 12,
                                         color: Colors.black),
                                     SizedBox(
                                         height: 30,
                                         width: 100,
                                         child: TextFormField(
-                                          onChanged: ((value) {}),
+                                          keyboardType: TextInputType.number,
+                                          onChanged: ((value) {
+                                            distance = value;
+                                          }),
                                         )),
                                     const SizedBox(
                                       height: 10,
@@ -339,7 +357,171 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(
                             width: 200,
                             child: ButtonWidget(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: SizedBox(
+                                            height: 420,
+                                            child: Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextRegular(
+                                                    text: 'Your Ticket',
+                                                    fontSize: 12,
+                                                    color: Colors.grey),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 0, 20, 0),
+                                                  title: TextRegular(
+                                                      text: name,
+                                                      fontSize: 10,
+                                                      color: Colors.grey),
+                                                  trailing: TextRegular(
+                                                      text: 'Name',
+                                                      fontSize: 14,
+                                                      color: Colors.black),
+                                                ),
+                                                ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 0, 20, 0),
+                                                  title: TextRegular(
+                                                      text: nameOfBus,
+                                                      fontSize: 10,
+                                                      color: Colors.grey),
+                                                  trailing: TextRegular(
+                                                      text: isChecked1
+                                                          ? 'AIRCON'
+                                                          : 'non-AIRCON',
+                                                      fontSize: 14,
+                                                      color: Colors.black),
+                                                ),
+                                                ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 0, 20, 0),
+                                                  title: TextRegular(
+                                                      text: 'From: $from',
+                                                      fontSize: 10,
+                                                      color: Colors.grey),
+                                                  // subtitle: TextRegular(
+                                                  //     text: 'Origin',
+                                                  //     fontSize: 8,
+                                                  //     color: Colors.grey),
+                                                  trailing: TextRegular(
+                                                      text: departTime,
+                                                      fontSize: 14,
+                                                      color: Colors.black),
+                                                ),
+                                                ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 0, 20, 0),
+                                                  title: TextRegular(
+                                                      text: 'To: $to',
+                                                      fontSize: 10,
+                                                      color: Colors.grey),
+                                                  // subtitle: TextRegular(
+                                                  //     text: 'Destination',
+                                                  //     fontSize: 8,
+                                                  //     color: Colors.grey),
+                                                  trailing: TextRegular(
+                                                      text: arrivalTime,
+                                                      fontSize: 14,
+                                                      color: Colors.black),
+                                                ),
+                                                ListTile(
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 0, 20, 0),
+                                                  title: TextRegular(
+                                                      text:
+                                                          'Distance: ${distance}km',
+                                                      fontSize: 10,
+                                                      color: Colors.grey),
+                                                  // subtitle: TextRegular(
+                                                  //     text: 'Origin',
+                                                  //     fontSize: 8,
+                                                  //     color: Colors.grey),
+                                                  trailing: TextBold(
+                                                      text: isChecked1
+                                                          ? (int.parse(
+                                                                      distance) *
+                                                                  2.10)
+                                                              .toStringAsFixed(
+                                                                  2)
+                                                          : (int.parse(
+                                                                      distance) *
+                                                                  1.90)
+                                                              .toStringAsFixed(
+                                                                  2),
+                                                      fontSize: 14,
+                                                      color: primary),
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                ButtonWidget(
+                                                    onPressed: (() {
+                                                      if (isChecked1 == true) {
+                                                        addRide(
+                                                            from,
+                                                            to,
+                                                            totalPassenger,
+                                                            name,
+                                                            nameOfBus,
+                                                            departTime,
+                                                            arrivalTime,
+                                                            availableSeats,
+                                                            distance,
+                                                            (int.parse(distance) *
+                                                                    2.10)
+                                                                .toStringAsFixed(
+                                                                    2));
+                                                      } else {
+                                                        addRide(
+                                                            from,
+                                                            to,
+                                                            totalPassenger,
+                                                            name,
+                                                            nameOfBus,
+                                                            departTime,
+                                                            arrivalTime,
+                                                            availableSeats,
+                                                            distance,
+                                                            (int.parse(distance) *
+                                                                    1.90)
+                                                                .toStringAsFixed(
+                                                                    2));
+                                                      }
+
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          HistoryScreen()));
+                                                    }),
+                                                    text: 'Continue',
+                                                    color: primary),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
                                 text: 'Continue',
                                 color: primary),
                           )
