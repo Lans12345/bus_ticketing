@@ -15,6 +15,16 @@ Future addRide(
   final docUser = FirebaseFirestore.instance.collection('Rides').doc();
 
   final json = {
+    'from': from,
+    'to': to,
+    'totalPassenger': totalPassenger,
+    'name': name,
+    'nameOfBus': nameOfBus,
+    'departTime': departTime,
+    'arrivalTime': arrivalTime,
+    'availableSeats': availableSeats,
+    'distance': distance,
+    'payment': payment,
     'id': docUser.id,
     'uid': FirebaseAuth.instance.currentUser!.uid
   };
