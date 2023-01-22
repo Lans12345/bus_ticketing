@@ -3,6 +3,7 @@ import 'package:bus_ticketing/screens/home_screen.dart';
 import 'package:bus_ticketing/screens/notif_page.dart';
 import 'package:bus_ticketing/screens/profile_page.dart';
 import 'package:bus_ticketing/utils/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -131,33 +132,57 @@ class HistoryScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                         color: buttonColor),
-                    child: StreamBuilder<Object>(
-                        stream: null,
-                        builder: (context, snapshot) {
-                          return ListView.builder(
-                              itemBuilder: ((context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Card(
-                                child: ListTile(
-                                  leading: const Icon(Icons.bus_alert),
-                                  title: TextBold(
-                                      text: 'Destination',
-                                      fontSize: 14,
-                                      color: Colors.black),
-                                  subtitle: TextRegular(
-                                      text: 'Origin',
-                                      fontSize: 12,
-                                      color: Colors.grey),
-                                  trailing: TextRegular(
-                                      text: 'Bus Name',
-                                      fontSize: 12,
-                                      color: Colors.black),
-                                ),
-                              ),
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Rides')
+                            .where('uid',
+                                isEqualTo:
+                                    FirebaseAuth.instance.currentUser!.uid)
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            print('error');
+                            return const Center(child: Text('Error'));
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            print('waiting');
+                            return const Padding(
+                              padding: EdgeInsets.only(top: 50),
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.black,
+                              )),
                             );
-                          }));
+                          }
+
+                          final data = snapshot.requireData;
+                          return ListView.builder(
+                              itemCount: data.docs.length,
+                              itemBuilder: ((context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Card(
+                                    child: ListTile(
+                                      leading: const Icon(Icons.bus_alert),
+                                      title: TextBold(
+                                          text: data.docs[index]['from'],
+                                          fontSize: 14,
+                                          color: Colors.black),
+                                      subtitle: TextRegular(
+                                          text: 'Origin',
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                      trailing: TextRegular(
+                                          text: data.docs[index]['nameOfBus'],
+                                          fontSize: 12,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                );
+                              }));
                         })),
                 const Expanded(
                   child: SizedBox(
