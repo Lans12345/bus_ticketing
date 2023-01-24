@@ -242,7 +242,7 @@ class _SignupPageState extends State<SignupPage> {
                                                       color: Colors.black,
                                                       fontSize: 12),
                                                   actions: <Widget>[
-                                                    FlatButton(
+                                                    MaterialButton(
                                                       onPressed: () =>
                                                           Navigator.of(context)
                                                               .pop(true),
