@@ -166,6 +166,156 @@ class HistoryScreen extends StatelessWidget {
                                       left: 10, right: 10),
                                   child: Card(
                                     child: ListTile(
+                                      onTap: (() {
+                                        showDialog(
+                                            context: context,
+                                            builder: ((context) {
+                                              return AlertDialog(
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        const Icon((Icons
+                                                            .bus_alert_rounded)),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        TextBold(
+                                                            text: data
+                                                                    .docs[index]
+                                                                ['nameOfBus'],
+                                                            fontSize: 16,
+                                                            color:
+                                                                Colors.black),
+                                                      ],
+                                                    ),
+                                                    TextBold(
+                                                        text: data.docs[index]
+                                                            ['time'],
+                                                        fontSize: 16,
+                                                        color: Colors.black),
+                                                  ],
+                                                ),
+                                                content: SizedBox(
+                                                  height: 250,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Divider(),
+                                                      SizedBox(
+                                                        height: 50,
+                                                        child: ListTile(
+                                                          leading: const Icon(
+                                                            Icons
+                                                                .location_on_rounded,
+                                                            color: Colors.red,
+                                                          ),
+                                                          title: TextRegular(
+                                                              text:
+                                                                  'Origin: ${data.docs[index]['from']}',
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black),
+                                                          trailing: TextBold(
+                                                              text: data.docs[
+                                                                      index][
+                                                                  'departTime'],
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 50,
+                                                        child: ListTile(
+                                                          leading: const Icon(
+                                                            Icons.my_location,
+                                                            color: Colors.red,
+                                                          ),
+                                                          title: TextRegular(
+                                                              text:
+                                                                  'Destination: ${data.docs[index]['to']}',
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black),
+                                                          trailing: TextBold(
+                                                              text: data.docs[
+                                                                      index][
+                                                                  'arrivalTime'],
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      const Divider(),
+                                                      SizedBox(
+                                                        height: 50,
+                                                        child: ListTile(
+                                                          leading: TextBold(
+                                                              text:
+                                                                  'Distance: ',
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black),
+                                                          trailing: TextBold(
+                                                              text: data.docs[
+                                                                          index]
+                                                                      [
+                                                                      'distance'] +
+                                                                  'km',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: SizedBox(
+                                                          height: 50,
+                                                          child: ListTile(
+                                                            leading: TextBold(
+                                                                text:
+                                                                    'Payment: ',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .black),
+                                                            trailing: TextBold(
+                                                                text: data.docs[
+                                                                            index]
+                                                                        [
+                                                                        'payment'] +
+                                                                    'php',
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: (() {
+                                                        Navigator.pop(context);
+                                                      }),
+                                                      child: TextBold(
+                                                          text: 'Close',
+                                                          fontSize: 14,
+                                                          color: Colors.grey))
+                                                ],
+                                              );
+                                            }));
+                                      }),
                                       leading: const Icon(Icons.bus_alert),
                                       title: TextBold(
                                           text: data.docs[index]['from'],
